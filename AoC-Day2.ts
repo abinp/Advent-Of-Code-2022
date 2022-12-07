@@ -1,7 +1,21 @@
 import * as fs from 'fs';
 
 function totalScore() {
-  const input = fs.readFileSync('input.txt', 'utf8');
+  const input = fs.readFileSync('day2Input.txt', 'utf8');
+  const roundStrategyList = input.split('\n').map((round: string) => {
+    const [opponent, player] = round.split(' ');
+    return {opponent, player};
+  });
+  let totalScore = 0;
+  roundStrategyList.forEach(currentRound => {
+    const currentRoundScore = roundScore(currentRound);
+    totalScore = totalScore + currentRoundScore;
+  });
+  console.log(totalScore);
+}
+
+function updatedTotalScore() {
+  const input = fs.readFileSync('day2Input.txt', 'utf8');
   const roundStrategyList = input.split('\n').map((round: string) => {
     const [opponent, player] = round.split(' ');
     return {opponent, player};
@@ -42,30 +56,23 @@ function updatedRoundScore({
   opponent: string;
   player: string;
 }): number {
-  // const dictionary = {
-  //   X: 'Rock',
-  //   Y: 'Paper',
-  //   Z: 'Scissor',
-  //   A: 'Rock',
-  //   B: 'Paper',
-  //   C: 'Scissor',
-  // };
   const resultMatrix = {
-    A: {playerShape: 'Rock', X: 'Paper', Y: 'Rock', Z: 'Scissor'},
-    B: {playerShape: 'Paper', X: 'Scissor', Y: 'Paper', Z: 'Rock'},
-    C: {playerShape: 'Scissor', X: 'Rock', Y: 'Scissor', Z: 'Paper'},
+    A: {playerShape: 'Rock', X: 'Scissor', Y: 'Rock', Z: 'Paper'},
+    B: {playerShape: 'Paper', X: 'Rock', Y: 'Paper', Z: 'Scissor'},
+    C: {playerShape: 'Scissor', X: 'Paper', Y: 'Scissor', Z: 'Rock'},
   };
   const defaultScore = {Rock: 1, Paper: 2, Scissor: 3};
   if (player === 'X') {
-    return defaultScore[resultMatrix[opponent][player]];
+    return defaultScore[resultMatrix[opponent].X];
   }
   if (player === 'Y') {
-    return 3 + defaultScore[resultMatrix[opponent][player]];
+    return 3 + defaultScore[resultMatrix[opponent].Y];
   }
   if (player === 'Z') {
-    return 6 + defaultScore[resultMatrix[opponent][player]];
+    return 6 + defaultScore[resultMatrix[opponent].Z];
   }
   return 0;
 }
 
 totalScore();
+updatedTotalScore();
