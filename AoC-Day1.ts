@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 
 async function maxCalories() {
-  const input = fs.readFileSync('input.txt', 'utf8');
+  const input = fs.readFileSync('day1Input.txt', 'utf8');
   const elfsByCalories = input.split('\n\n');
   let maxCalories = 0;
   let elfWithMaxCalories = -1;
@@ -22,7 +22,7 @@ async function maxCalories() {
 }
 
 async function topThreeMaxCalories() {
-  const input = fs.readFileSync('input.txt', 'utf8');
+  const input = fs.readFileSync('day1Input.txt', 'utf8');
   const elfsByCalories = input.split('\n\n');
   let maxCalories1 = 0;
   let maxCalories2 = 0;
